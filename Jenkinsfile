@@ -25,7 +25,7 @@ pipeline {
               steps{
                   echo 'Deploying to AWS...'
                   withAWS(credentials: 'junjiefeng', region: 'us-east-1') {
-                      sh "aws eks --region us-west-1 update-kubeconfig --name my-cluster"
+                      sh "aws eks --region us-east-1 update-kubeconfig --name my-cluster"
                       sh "kubectl config use-context arn:aws:eks:us-east-1:124647807645:cluster/my-cluster"
                       sh "kubectl apply -f controller/deployment.yml"
                       sh "kubectl get nodes"
