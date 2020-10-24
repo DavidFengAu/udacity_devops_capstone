@@ -3,7 +3,7 @@ pipeline {
      stages {
          stage('Lint') {
               steps {
-                  sh 'tidy -q -e ./app/*.html'
+                  sh 'tidy -q -e **/*.html'
               }
          }
          stage('Build Docker Image') {
