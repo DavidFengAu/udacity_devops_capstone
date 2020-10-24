@@ -27,11 +27,17 @@ pipeline {
                   withAWS(credentials: 'junjiefeng', region: 'us-east-1') {
                       sh "aws eks --region us-east-1 update-kubeconfig --name my-cluster"
                       sh "kubectl config use-context arn:aws:eks:us-east-1:124647807645:cluster/my-cluster"
+                      sh "kubectl set image deployments/udacity-cloud-devops-capstone udacity-cloud-devops-capstone=fatmonitor/udacity-cloud-devops-capstone:latest"
                       sh "kubectl apply -f controller/deployment.yml"
-                      sh "kubectl get nodes"
+                      sh "kubectl apply -f controller/service.yml"
                       sh "kubectl get deployments"
                       sh "kubectl get pod"
                   }
+              }
+        }
+        stage("Cleaning up") {
+              steps{
+                    sh "docker system prune"
               }
         }
      }
