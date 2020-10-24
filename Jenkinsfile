@@ -27,10 +27,10 @@ pipeline {
                   withAWS(credentials: 'aws', region: 'us-east-1') {
                       sh "aws eks --region us-west-1 update-kubeconfig --name my-cluster"
                       sh "kubectl config use-context arn:aws:eks:us-east-1:124647807645:cluster/my-cluster"
-                      sh "kubectl apply -f ./blue-controller.json"
-                      sh "kubectl apply -f ./green-controller.json"
-                      sh "kubectl apply -f ./blue-service.json"
-                      sh "kubectl apply -f ./green-service.json"
+                      sh "kubectl apply -f controller/deployment.yml"
+                      sh "kubectl get nodes"
+                      sh "kubectl get deployments"
+                      sh "kubectl get pod"
                   }
               }
         }

@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: udacity-capstone-deploy
+spec:
+  type: LoadBalancer
+  selector:
+    app: udacity-capstone-deploy
+  ports:
+    - port: 80
+      targetPort: 80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: udacity-capstone-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: udacity-capstone-deploy
+  template:
+    metadata:
+      labels:
+        app: udacity-capstone-deploy
+    spec:
+      containers:
+        - name: udacity-capstone-deploy
+          image: fatmonitor/udacity-cloud-devops-capstone:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              protocol: TCP
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  minReadySeconds: 10
